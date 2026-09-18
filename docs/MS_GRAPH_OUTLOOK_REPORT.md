@@ -1,10 +1,10 @@
 # Microsoft Graph 프로필 및 Outlook 연동 개발 보고서
 
-## 1. 담당 영역
+## 1. 개요
 
-PrompTune 프로젝트에서 Microsoft 365 조직 계정과 서비스 연동을 위한 Microsoft Graph 기능을 담당하였다.
+PrompTune 프로젝트에서 Microsoft 365 조직 계정과의 서비스 연동을 위한 Microsoft Graph 기능 구현 내용이다.
 
-주요 개발 범위는 다음과 같다.
+구현 범위는 다음과 같다.
 
 - Microsoft Entra ID 애플리케이션 연동
 - Microsoft OAuth 인증
@@ -268,81 +268,7 @@ Frontend와 Microsoft 연동 Backend API 사이의 통신 담당.
 
 ---
 
-## 8. Git 작업 기록
-
-### 2026-08-10
-
-`feat: Microsoft Graph 계정 연동 구현`
-
-Microsoft Graph 계정 연동의 기본 구조를 구현하였다.
-
-주요 작업:
-
-- Microsoft Graph Controller
-- Microsoft Graph Service
-- Token 암호화 처리
-- Microsoft 연결 Domain
-- OAuth State Domain
-- Repository
-- DB Migration
-- Frontend Microsoft API
-- Settings 연동
-
-### 2026-08-11
-
-`feat: Microsoft Graph 사용자 프로필 조회 추가`
-
-Microsoft Graph에서 조직 사용자 Profile을 조회하여 PrompTune Frontend에 표시하는 기능을 추가하였다.
-
-주요 추가 항목:
-
-- 이름
-- 회사 이메일
-- 회사명
-- 부서
-- 직급 / 직함
-
----
-
-## 9. 담당 파일 요약
-
-### 신규 생성 — 11개
-
-1. `MicrosoftIntegrationController.java`
-2. `MicrosoftGraphService.java`
-3. `TokenCryptoService.java`
-4. `MicrosoftConnection.java`
-5. `MicrosoftOauthState.java`
-6. `MicrosoftConnectionRepository.java`
-7. `MicrosoftOauthStateRepository.java`
-8. `V6__add_microsoft_graph_connection.sql`
-9. `MicrosoftProfileView.tsx`
-10. `frontend/src/app/settings/page.tsx`
-11. `frontend/src/lib/microsoft.ts`
-
-### 기존 파일 수정 — 1개
-
-1. `backend/src/main/resources/application.yml`
-
----
-
-## 10. 담당 범위에서 제외한 파일
-
-Microsoft 관련 문자열이 포함되어 검색되었지만 직접 생성한 Microsoft Graph 담당 파일이 아닌 다음 파일은 본 보고서의 담당 파일 목록에서 제외하였다.
-
-- `GraphMockService.java`
-- `OAuth2ClientConfig.java`
-- `OAuth2SuccessHandler.java`
-- `OAuth2UserService.java`
-- `.env.example`
-- `docker-compose.yml`
-- `User.java`
-- `V1__init.sql`
-- `V2__seed.sql`
-
----
-
-## 11. 최종 구현 결과
+## 8. 최종 구현 결과
 
 Microsoft 365 조직 계정을 PrompTune과 연결할 수 있는 Microsoft Graph 연동 기반을 구축하였다.
 

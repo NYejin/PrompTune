@@ -46,14 +46,13 @@
 > 특히 Audience·Context·Tone·Constraint·Example은 "없어도 충분한 경우"가 있으므로
 > 이유를 생각하고 판정한다.
 
-## 데이터 파이프라인 영향 (병환 담당)
+## 데이터 파이프라인 영향
 
-이 기준은 **학습 데이터의 정답(Ground Truth) 기준**이다. 데이터 담당(병환)은:
+이 기준은 **학습 데이터의 정답(Ground Truth) 기준**이다. 데이터 담당자는:
 
 - 합성 데이터 생성 시 이 기준으로 라벨을 부여
 - 기존 gold 라벨을 새 기준으로 재검토 (특히 번역·요약·다듬기 작업의 CONTEXT·EXAMPLE·LENGTH)
 - 재라벨링 후 kappa 재측정 → CONTEXT·FORMAT·CONSTRAINT 일치도 개선 확인
 
-목업 코드(`ai-service/app/services/diagnose_mock.py`)도 이 기준을 규칙으로 반영했다
-(작업별 불필요 요소는 없어도 0). 승득이 KcELECTRA로 교체할 때도 이 기준의
-라벨로 학습해야 한다.
+규칙 기반 진단(`ai-service/app/services/diagnose_rules.py`)도 이 기준을 반영했다.
+KcELECTRA(`diagnose_real.py`)의 학습 라벨도 이 기준을 따른다.
