@@ -124,4 +124,4 @@ src/
 
 ## 접근성
 
-키보드 포커스 표시, `prefers-reduced-motion` 존중, 모바일 반응형. (예정)
+키보드 포커스 표시, `prefers-reduced-motion` 존중, 모바일 반응형.
