@@ -85,7 +85,7 @@ Nginx가 리버스 프록시로 앞단에 서서 80/443을 받고, `/api`·`/log
 
 **도메인이 없다면**: 무료로 [nip.io](https://nip.io)를 쓸 수 있다. 가입 없이
 `<IP를-대시로-바꾼값>.nip.io`가 그 IP로 자동 resolve된다.
-예: EC2 퍼블릭 IP가 `54.180.115.193`이면 `DOMAIN=54-180-115-193.nip.io`.
+예: EC2 퍼블릭 IP가 `xx.xx.xx.xx`면 `DOMAIN=xx-xx-xx-xx.nip.io`.
 
 **주의**: EC2 퍼블릭 IP가 바뀌면(인스턴스 stop/start 등) 도메인도 그 IP를 다시 반영해야 하고
 인증서도 새로 받아야 한다. Elastic IP를 붙여서 고정해두는 걸 권장하지만, 필수는 아니다.
@@ -116,7 +116,7 @@ HTTPS를 아직 설정 안 했다면(5-2절), 이 시점엔 `http://<EC2_PUBLIC_
 
 브라우저: `https://<도메인>` (5-2절까지 끝냈다면) 또는 `http://<EC2_PUBLIC_IP>:3000` (아직이면)
 
-## 8. 소셜 로그인 (배포 후, 담당: 승연)
+## 8. 소셜 로그인 (배포 후)
 
 각 제공자 콘솔의 redirect URI를 새 도메인 기준으로 등록/수정한다 (HTTPS 적용 후엔 포트 번호 없이):
 - 구글: `https://<도메인>/login/oauth2/code/google`

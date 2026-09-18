@@ -5,21 +5,11 @@
 한국어 프롬프트 개선 AI 코파일럿. 사용자가 입력한 거친 업무 지시문에서
 **부족한 요소(8요소)를 감지해 되묻고**, 보완된 프롬프트로 최종 결과물을 생성한다.
 
-> **이 레포는 "동작하는 목업(mockup)"이다.** 16단계 파이프라인 전체가 실제로
-> 연결되어 흐르지만, AI 모델·외부 API 부분은 가짜 응답(mock)으로 채워져 있다.
-> 각 팀원이 자기 담당 mock을 실제 구현으로 **교체**하면 된다.
-> 교체 방법은 [`docs/MOCK_GUIDE.md`](docs/MOCK_GUIDE.md) 참고.
-
----
-
-## 목업 3원칙
-
-1. **흐름은 진짜** — 프론트→백엔드→AI 서비스가 실제 HTTP로 연결되고, 데이터가
-   16단계를 따라 흐른다.
-2. **내용은 가짜** — KcELECTRA·HyperCLOVA X·BGE-M3·MS Graph 등은 규칙 기반
-   또는 샘플 응답으로 대체(mock). 모델 없이도 전체가 돌아간다.
-3. **교체 지점 명시** — 모든 mock에 `# TODO(담당자): 실제 구현` 주석과 입출력
-   형식이 문서화되어 있다. 팀원은 이 지점만 바꾸면 된다.
+> **2026-09-18 코드 재확인:** 이 레포는 "동작하는 목업"에서 시작했지만, 지금은
+> AI 파이프라인 대부분이 실제 모델로 교체되어 있다 — HyperCLOVA X는 로컬
+> transformers 런타임(`hcx_runtime.py`)으로 실제 추론하고, BGE-M3는
+> `FlagEmbedding`으로 실제 임베딩을 계산하며(`rag_retriever.py`), 외부 검색은
+> 실제 Tavily API를 호출한다. 최신 구현 상태는 [`docs/STATUS.md`](docs/STATUS.md) 참고.
 
 ---
 
@@ -58,31 +48,16 @@ docker compose up --build
 
 ---
 
-## 담당자별 교체 대상 (요약)
-
-| 영역 | 단계 | 담당(예시) | mock → 실제 |
-|------|------|-----------|-------------|
-| AI 진단 | 5 | 승득 | 규칙 8요소 판정 → KcELECTRA |
-| AI 생성 | 7,14 | 승득 | 템플릿 문구 → HyperCLOVA X |
-| AI 검색 | 13 | 승연 | 샘플 문서 → BGE-M3 + pgvector |
-| AI 검증 | 15 | 승득 | 규칙 검증 → KcELECTRA NLI + HyperCLOVA |
-| 백엔드 인증 | 0,4 | 승연 | mock 세션 → OAuth2 + MS Graph |
-| 프론트 | 1,2,9,10 | 예진 | (실제 UI 구현됨) |
-| 인프라·데이터 | 전체 | 병환 | Repo·Docker·CI/CD·데이터 파이프라인 |
-
-정확한 교체 절차는 [`docs/MOCK_GUIDE.md`](docs/MOCK_GUIDE.md).
-
----
-
 ## 기술 스택
 
 - **Frontend**: Next.js 14 (App Router), React, TypeScript
-- **Backend**: Spring Boot 3, JPA, Flyway, Spring Security (OAuth2)
-- **AI Service**: FastAPI, Python 3.11
+- **Backend**: Spring Boot 3, JPA, Flyway, Spring Security (OAuth2 — 로컬/Google/Kakao/Naver/Microsoft)
+- **AI Service**: FastAPI, Python 3.11, HuggingFace transformers(HyperCLOVA X 로컬 추론), FlagEmbedding(BGE-M3), Tavily
 - **DB**: PostgreSQL 16 + pgvector
 - **Infra**: Docker Compose
 
 ## 프로젝트 상태
 
-🟢 **목업 완성** — 4개 서비스(프론트·백·AI·DB) 통합, 전체 흐름 동작. 실제 모델·API는 교체 대기.
-진행 현황은 [`docs/STATUS.md`](docs/STATUS.md), 역할 분담은 [`docs/ROLES.md`](docs/ROLES.md) 참고.
+진단(5)·문구생성(7)·답변생성(14)·최종검증(15)·내부검색(13) 실제 모델 연동 완료.
+업무맥락 조회(MS Graph, 4단계)는 아직 mock. 최신 구현 상태는
+[`docs/STATUS.md`](docs/STATUS.md) 참고.

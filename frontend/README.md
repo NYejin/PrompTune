@@ -1,6 +1,6 @@
 # Frontend (Next.js)
 
-PrompTune 파이프라인의 **프론트 단계 1,2,9,10** 담당 (예진).
+PrompTune 파이프라인의 **프론트 단계 1,2,9,10** 담당.
 App Router 기반 SPA로, 로그인부터 채팅·파일관리·히스토리·대시보드·설정까지 전체 화면을 담당한다.
 
 ## 실행
@@ -77,7 +77,7 @@ src/
 │   └── preferenceQuestions.ts  # 온보딩 3문항 공용 상수 — onboarding/history-personalization/dashboard에서 사용
 │
 └── api/                        # 백엔드 REST 엔드포인트별 클라이언트
-    ├── acitivityLogs.ts        # AcitivityLogsController
+    ├── activityLogs.ts         # ActivityLogsController
     ├── chatSessions.ts         # ChatSessionsController
     ├── consents.ts             # ConsentsController
     ├── dashboard.ts            # DashboardController
@@ -116,7 +116,7 @@ src/
   - 새 문항을 추가/수정할 땐 반드시 이 파일 하나만 고치면 된다.
     - 예전엔 페이지마다 따로 복붙되어 있어서 라벨 문구가 드리프트(온보딩 "적극적으로 보완" vs 요약 "적극적 보완"이 우연히 갈라짐)된 적 있음.
 
-## 교체/확장 (예진)
+## 교체/확장
 
 - mock이 아니라 실제 UI로 동작.
 - 백엔드/AI 서비스가 실제 모델로 교체되어도 프론트는 응답 형식만 같으면 수정 없이 그대로 동작한다.

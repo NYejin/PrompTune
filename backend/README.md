@@ -25,29 +25,29 @@ docker build -t promptune-backend . && docker run -p 8080:8080 promptune-backend
 
 ```
 service/
-├── GateService.java        # 3번 게이트 (형기, 실제 규칙)
-├── RecommendService.java   # 6번 점수로직 (형기, mock)
+├── GateService.java        # 3번 게이트 (실제 규칙)
+├── RecommendService.java   # 6번 추천 선정 — PersonalizationScoreRepository 실점수 기반
 ├── AiServiceClient.java    # ai-service HTTP 호출
-└── GraphMockService.java   # 0,4번 인증·Graph (승연, mock)
+└── GraphMockService.java   # 0,4번 인증·Graph — 현재 mock 유지
 controller/
 └── PipelineController.java # 오케스트레이터
 resources/
 ├── application.yml
-└── db/migration/V1__init.sql  # PostgreSQL + pgvector 스키마
+└── db/migration/           # Flyway — V1~V36 (스키마+시드+누적 변경)
 ```
 
-## 교체 대상 (mock)
+## 남은 mock
 
-| 담당 | 파일 | mock → 실제 |
-|------|------|-------------|
-| 형기 | RecommendService | 단순 우선순위 → Tab/Esc기록+MS365 점수로직 |
-| 승연 | GraphMockService | 샘플 → OAuth2 + MS Graph API |
-| 형기 | execute()의 16번 | (주석) → PostgreSQL 행동로그 저장 |
+| 파일 | 상태 |
+|------|------|
+| GraphMockService | 0,4번(인증·업무맥락) — 실제 MS Graph 연동(`MicrosoftGraphService`)은 별도로 존재하지만, 파이프라인 오케스트레이터는 아직 Mock 쪽을 기본으로 사용 |
 
 ## DB (PostgreSQL + pgvector)
 
-Flyway가 스키마 관리 (`V1__init.sql`). 테이블: users, user_preferences,
-prompt_sessions, behavior_logs, documents(vector 1024차원 = BGE-M3).
+Flyway가 스키마 관리 (`db/migration/V1~V36`). 초기 스키마(V1)·시드(V2) 이후로도
+개인화 점수·행동 로그·MS 연동·문서 컨텍스트 등 기능이 늘면서 마이그레이션이
+계속 누적되어 왔다. V27·V28은 초기 목업 시드/샘플 데이터를 정리하는
+마이그레이션이다.
 
 ## 로컬에서 AWS(S3) 기능 테스트하기
 
@@ -60,7 +60,7 @@ prompt_sessions, behavior_logs, documents(vector 1024차원 = BGE-M3).
 3. 사용 목적 "Command Line Interface (CLI)" 또는 "Local code" 선택
 4. Access Key ID / Secret Access Key 저장 (Secret Key는 이 화면에서 한 번만 보여줌)
 
-⚠️ S3(promptune-document 버킷) 권한이 없으면 병환님께 먼저 확인하세요.
+⚠️ S3(promptune-document 버킷) 권한이 없으면 인프라 담당자에게 먼저 확인하세요.
 
 ### 2. 프로젝트 루트에 `.env` 파일 생성
 ```
