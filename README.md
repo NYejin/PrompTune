@@ -5,12 +5,6 @@
 한국어 프롬프트 개선 AI 코파일럿. 사용자가 입력한 거친 업무 지시문에서
 **부족한 요소(8요소)를 감지해 되묻고**, 보완된 프롬프트로 최종 결과물을 생성한다.
 
-> **2026-09-18 코드 재확인:** 이 레포는 "동작하는 목업"에서 시작했지만, 지금은
-> AI 파이프라인 대부분이 실제 모델로 교체되어 있다 — HyperCLOVA X는 로컬
-> transformers 런타임(`hcx_runtime.py`)으로 실제 추론하고, BGE-M3는
-> `FlagEmbedding`으로 실제 임베딩을 계산하며(`rag_retriever.py`), 외부 검색은
-> 실제 Tavily API를 호출한다. 최신 구현 상태는 [`docs/STATUS.md`](docs/STATUS.md) 참고.
-
 ---
 
 ## 아키텍처
@@ -59,5 +53,4 @@ docker compose up --build
 ## 프로젝트 상태
 
 진단(5)·문구생성(7)·답변생성(14)·최종검증(15)·내부검색(13) 실제 모델 연동 완료.
-업무맥락 조회(MS Graph, 4단계)는 아직 mock. 최신 구현 상태는
-[`docs/STATUS.md`](docs/STATUS.md) 참고.
+최신 구현 상태는 [`docs/STATUS.md`](docs/STATUS.md) 참고.
